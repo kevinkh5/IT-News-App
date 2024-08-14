@@ -1,0 +1,122 @@
+services:
+  webserver:
+    depends_on:
+      - db
+    image: nginx:latest
+    container_name: proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./myweb:/usr/share/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot-etc:/etc/letsencrypt
+    networks:
+      - my_network
+
+  db:
+    image: postgres:16.4
+    container_name: postgresdb
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: ${user}
+      POSTGRES_PASSWORD: ${password}
+      POSTGRES_DB: ${dbname}
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx:latest
+    container_name: myweb
+    restart: always
+    volumes:
+      - ./myweb:/usr/share/nginx/html
+    networks:
+      - my_network
+
+  flask:
+    build: ./backend
+    restart: always
+    container_name: myflask
+    command: gunicorn -w 1 -b 0.0.0.0:80 wsgi:app
+    volumes:
+      - ./myweb/audio:/usr/src/flask_app/audio
+    networks:
+      - my_network
+
+  batch_info:
+    depends_on:
+      - db
+    build:
+      context: ./batch
+      dockerfile: crawling_info_Dockerfile
+    container_name: crawling_info_container
+    volumes:
+      - ./batch:/usr/src/batch
+    command: python /usr/src/batch/crawling_info.py
+    networks:
+      - my_network
+
+  batch_detail:
+    depends_on:
+      - db
+    build:
+      context: ./batch
+      dockerfile: crawling_detail_Dockerfile
+    container_name: crawling_detail_container
+    volumes:
+      - ./batch:/usr/src/batch
+    command: python /usr/src/batch/crawling_detail.py
+    networks:
+      - my_network
+
+  batch_tts:
+    depends_on:
+      - db
+    build:
+      context: ./batch
+      dockerfile: tts_batch_Dockerfile
+    container_name: tts_batch_container
+    volumes:
+      - ./batch:/usr/src/batch
+      - ./myweb/audio:/usr/src/batch/audio
+    command: python /usr/src/batch/tts_batch.py
+    networks:
+      - my_network
+
+  batch_summary:
+    depends_on:
+      - db
+    build:
+      context: ./batch
+      dockerfile: summary_batch_Dockerfile
+    container_name: summary_batch_container
+    volumes:
+      - ./batch:/usr/src/batch
+    command: python /usr/src/batch/summary_batch.py
+    networks:
+      - my_network
+
+  certbot:
+    depends_on:
+      - webserver
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+      - ./myweb:/usr/share/nginx/html
+    command: certonly --dry-run --webroot --webroot-path=/usr/share/nginx/html --email kyon5@naver.com --agree-tos --no-eff-email --keep-until-expiring -d baduks.store -d www.baduks.store
+
+volumes:
+  db_data:
+
+
+networks:
+  my_network:
+    driver: bridge

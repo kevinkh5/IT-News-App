@@ -1,0 +1,446 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  color: #3f464d;
+  font-family: "Spoqa Han Sans Neo", "Sans-serif";
+}
+
+/* a 링크 태그 스타일 초기화 */
+a {
+  all: unset;
+}
+
+a:link {
+  text-decoration: none;
+  color: #3f464d;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #3f464d;
+}
+
+a:active {
+  text-decoration: none;
+  color: #3f464d;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #3f464d;
+}
+
+.inner {
+  width: 100%;
+  /* 가로 사이즈가 1200px 넘는 해상도에서는 max-width 설정 */
+  height: 100%;
+  /* align-items 등으로 수직 가운데 정렬을 위해, 알맞은 height 설정이 필요함 */
+  margin: 0 auto;
+  /* 가운데 정렬: 동일 요소에 width 가 설정되어 있을 때에만 적용 */
+  padding: 0rem 2rem;
+  /* 좌우 padding 을 살짝 주어서, 좌우에 딱 붙지 않도록 함 */
+  overflow: hidden;
+  /* 넘치는 영역에 대해서는 표시안되도록 작성해야 함 */
+}
+
+header {
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  /* 스크롤 내려도 고정되도록 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.head-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 필요시 세부 설정을 위해, 상단 좌측 브랜드만을 별도로 클래스로 정의 */
+.head-container .head-brand {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.head-container .head-brand a:hover {
+  color: #2186c4;
+  cursor: pointer;
+}
+
+/* 필요시 세부 설정을 위해, 상단 우측 메뉴만을 별도로 클래스로 정의 */
+.head-container .head-blog {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.head-container .head-blog a:hover {
+  color: #2186c4;
+  cursor: pointer;
+}
+
+section {
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+}
+
+/* 배경 이미지에 색상을 어둡게 하기 위해, 어두운 색상으로 이미지 상위에 투명도를 주어 덮어씌움 */
+.main-container {
+  width: 100%;
+  height: 80%;
+  background-color: rgb(47, 89, 88);
+  opacity: 0.8;
+  z-index: 2;
+  margin-top: 10px;
+  /* position 이 fixed 일 경우, 문서 흐름에서 빠지므로, 이 부분은 margin 으로 적용 */
+}
+
+.title-container {
+  padding-top: 80px;
+  padding-bottom: 20px;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.8rem;
+}
+
+.message {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #fff;
+  line-height: 2rem;
+}
+
+/* ############content-page */
+.main-article {
+  text-align: center;
+  /* 이미지가 가운데 정렬됩니다. */
+}
+
+.article-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.article-author {
+  font-size: 1.2rem;
+  text-align: right;
+}
+
+.article-date {
+  font-size: 1rem;
+  text-align: right;
+  /* font-weight: bold; */
+}
+
+.article-sourcelink:hover {
+  color: #0d47a1;
+  cursor: pointer;
+}
+
+/* ###################### */
+.description {
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 1.5em;
+  /* 줄 높이를 폰트 크기의 1.5배로 설정합니다. */
+}
+
+.summary {
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 1.5em;
+  /* 줄 높이를 폰트 크기의 1.5배로 설정합니다. */
+}
+
+
+.desc .article-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #545e6f;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.roadmap-container {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.roadmap-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.roadmap-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #545e6f;
+}
+
+.slide-prev {
+  font-size: 2rem;
+  cursor: pointer;
+  color: rgb(47, 89, 88);
+}
+
+.slide-next {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #cfd8dc;
+  /* 기본적으로 비활성화 색깔 */
+}
+
+/* 사용자가 마우스를 올렸을 때(:hover 상태) 요소를 수평축(X축)으로 약간 왼쪽으로
+ 이동시키고, 그 이동이 부드럽게 이루어지도록 하는 애니메이션을 설정 */
+.slide-prev-hover:hover {
+  transition: transform 0.5;
+  transform: translateX(-2px);
+}
+
+.slide-next-hover:hover {
+  transition: transform 0.5;
+  transform: translateX(+2px);
+}
+
+
+.arrow-container {
+  display: flex;
+  /* margin: 0 auto; */
+}
+
+.class-list {
+  display: flex;
+  list-style: none;
+  padding: 1rem 0;
+  margin: 0;
+  overflow: none;
+  /* overflow를 hidden으로 하면 transform시 이미지 짤림 */
+}
+
+.class-card {
+  width: 240px;
+  /* box-shadow: 블럭에 그림자를 적용하는 CSS 기능
+     https://developer.mozilla.org/ko/docs/Web/CSS/box-shadow 
+     offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 10px 10px 10px -5px rgba(25, 42, 70, 0.2);
+  border-radius: 8px;
+  margin: 0 10px;
+  transition: 0.4s;
+  /* IE11 에서는 flex 설정시, 디폴트로 flex 아이템들에 고정 너비를 무시 */
+  flex-shrink: 0;
+}
+
+.class-card:hover {
+  box-shadow: 10px 10px 10px 0px rgba(25, 42, 70, 0.2);
+  transform: translate(0, -5px);
+}
+
+.class-image {
+  /* 사이즈가 큰 이미지를 작은 블럭 내에 넣을 때 호환성을 위해 max-width/max-height 를 사용해야 함 */
+  max-width: 240px;
+
+  /* border-radius: 블럭 모서리를 둥글게 하는 CSS 기능
+     top-left | top-right | bottom-right | bottom-left */
+  border-radius: 8px 8px 0 0;
+}
+
+.class-container {
+  width: 100%;
+  padding: 0.5rem 1rem 1rem 1rem;
+}
+
+.class-skill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.class-type {
+  font-size: 0.9rem;
+  color: #949393;
+}
+
+.class-format {
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #0d47a1;
+  padding: 0.2rem;
+}
+
+.class-desc {
+  width: 100%;
+  margin-top: 1rem;
+  color: #545e6f;
+}
+
+/* 카드 하버했을 때 글자색 파란색으로 만들기 */
+.class-desc:hover {
+  color: #2186c4;
+}
+
+/* inherit을 사용하면 부모로 부터 색깔을 상속받을 수 있다. */
+.class-title {
+  font-weight: bold;
+  color: inherit;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.5rem;
+}
+
+.class-detail {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #545e6f;
+  line-height: 1.5rem;
+  cursor: pointer;
+}
+
+/* 카드 하버했을 때 글자색 파란색으로 만들기 */
+.class-detail:hover {
+  color: #2186c4;
+}
+
+.roadmap-desc {
+  display: visible;
+}
+
+li a:hover {
+  cursor: pointer;
+}
+
+footer {
+  border-top: 1px solid #e4e4e4;
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+.footer-message {
+  font-weight: bold;
+  color: #545e6f;
+  margin: 0.3rem 0.5rem;
+}
+
+.footer-contact {
+  color: #545e6f;
+  margin: 0 0.5rem;
+}
+
+.footer-copyright {
+  color: #545e6f;
+  margin: 1rem 0.5rem;
+}
+
+#backtotop {
+  background-color: rgb(47, 89, 88);
+  width: 40px;
+  height: 40px;
+  text-align: center;
+
+  border-radius: 20px;
+  /* width,hegiht의 중간 값을 넣으면 원이 됨*/
+
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition-property: background-color, opacity, visibility;
+  transition-duration: 0.3s, 0.5s, 0.5s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999;
+}
+
+/* 아아콘 적용 방법
+  1. ::after (요소 뒤에 content 추가) 가상 요소에서,
+  2. content: "폰트어썸 유니코드" 를 넣고,
+  3. font-family: FontAwesome 이라고 넣으면 됨
+  */
+#backtotop::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-size: 1.5rem;
+  line-height: 40px;
+  /*위 backtotop에서 height40과 맞추면 가운데 놓여짐*/
+  color: #fff
+}
+
+/*show 부분이 클래스*/
+#backtotop.show {
+  opacity: 1;
+  /* 불투명 */
+  visibility: visible;
+  background-color: rgb(47, 89, 88);
+}
+
+/* #backtotop 요소에 .show 클래스가 있을 때, 해당 요소에 마우스를 올리면 스타일이 변경되도록 */
+#backtotop.show:hover {
+  cursor: pointer;
+  background-color: rgb(126, 141, 140);
+  /* #33333 인데 중복된값 생략가능 */
+}
+
+/* 이미지 위에 하버링 했을 때 손 모양  */
+ul li img:hover {
+  cursor: grab;
+}
+
+/* 이미지 위에서 클릭했을 때 잡는 모양 */
+ul li img:active {
+  cursor: grabbing;
+}
+
+
+@media only screen and (min-width: 1200px) {
+  .inner {
+    max-width: 1200px;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .skill-container {
+    display: none;
+  }
+
+  .roadmap-desc {
+    display: none;
+  }
+}
+
+/* media only
+미디어 쿼리는 화면의 크기, 해상도, 방향 등 다양한 특성에 따라 다른 스타일을 적용할 수 있도록 도와줌
+보통 480px */
+
+/* px는 픽셀 단위로, 화면에서의 고정된 크기
+rem은 루트 element를 기준으로한 상대적인 크기 */
+@media only screen and (max-width: 480px) {
+  .title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 0.8rem;
+  }
+
+  .message {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #fff;
+    margin-bottom: 0.8rem;
+  }
+}

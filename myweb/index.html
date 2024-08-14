@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>IT News 스크래퍼</title>
+  <meta name="description" content="IT News 기사" />
+  <meta name="keywords" content="AI, APPS" />
+  <meta name="author" content="kevin" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta propery="og:type" content="website" />
+  <meta property="og:title" content="IT News 사이트입니다." />
+  <meta property="og:description" content="IT News 웹페이지입니다." />
+  <meta property="og:site_name" content="IT News 크롤러" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="IT News 사이트입니다." />
+  <meta name="twitter:description" content="IT News 웹페이지입니다." />
+  <meta name="twitter:creator" content=kevin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header>
+    <div class="inner">
+      <div class="head-container">
+        <div class="head-brand"><a href="">IT News 스크래퍼</a></div>
+        <div class="head-blog"><a href="">로그인</a></div>
+      </div>
+    </div>
+  </header>
+  <!-- 메인 이미지 섹션 -->
+  <section class="main">
+    <div class="main-container">
+      <div class="inner">
+        <div class="title-container">
+          <div class="title">IT 기사 읽고 빠르게 트렌드 알기 (+영어 공부는 덤!😃)</div>
+          <div class="message">
+            💻 하루 한번 씩 기사를 크롤링 해옵니다.<br />
+            🗣️ 영어 기사를 읽어주는 TTS 기능을 제공합니다.<br />
+            ✍️ 기사 요약내용을 제공합니다.<br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content-page" style="display: none;">
+    <section>
+      <div class="roadmap-title-container">
+        <div class="inner">
+          <div class="roadmap-container">
+            <div class="roadmap-title">category</div>
+            <div class="arrow-container">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <br>
+    <section>
+      <div class="inner">
+        <div class="article-meta">
+          <div class="article-title">title</div>
+          <div class="article-author">author</div>
+          <div class="article-date">2024-01-01</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="inner">
+        <div class="row">
+          <!-- Main article -->
+          <div class="col">
+            <div class="main-article">
+              <img src="https://via.placeholder.com/600x400" alt="Main news image">
+              <br>
+              <audio controls>
+                <source src="util/audio/tmp_speak.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+              <div class="description">
+                This is a brief description of the main news article. It gives a
+                summary of the news content.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Sidebar -->
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="inner">
+        <div class="article-meta">
+          <br><br>
+          <div class="article-title">Summary</div>
+          <br>
+          <div class="summary">This is a brief description of the main news article. It gives a
+            summary of the news content.</div>
+          <br><br>
+          <div>Source from Techcrunch ⇩</div>
+          <br>
+          <a class="article-sourcelink" href="www.sourcelink-example.com" target="_blank">www.sourcelink-example.com</a>
+          <br><br>
+        </div>
+      </div>
+    </section>
+  </section>
+  <section class="card-page" style="display: block;">
+  </section>
+  <footer>
+    <div class="inner">
+      <div class="footer-message">IT News TTS & 요약 서비스</div>
+      <div class="footer-contact">Contact: Kevin</div>
+      <div class="footer-copyright">Copyright 2024 © All rights reserved.</div>
+    </div>
+  </footer>
+  <a id="backtotop"></a>
+  <!-- Flask 연결 Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

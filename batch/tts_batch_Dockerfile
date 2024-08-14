@@ -1,0 +1,8 @@
+FROM python:3.12
+WORKDIR /usr/src/batch
+RUN mkdir -p /usr/src/batch/audio
+COPY ./requirements.txt ./
+RUN pip install -r requirements.txt
+COPY tts_batch.py .
+COPY ./.env .
+CMD ["python", "tts_batch.py"]

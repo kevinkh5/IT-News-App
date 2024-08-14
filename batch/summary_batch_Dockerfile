@@ -1,0 +1,7 @@
+FROM python:3.12
+WORKDIR /usr/src/batch
+COPY ./requirements.txt ./
+RUN pip install -r requirements.txt
+COPY summary_batch.py .
+COPY ./.env .
+CMD ["python", "summary_batch.py"]
