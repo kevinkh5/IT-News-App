@@ -1,4 +1,5 @@
 # IT 영문 뉴스기사 TTS & 요약 서비스
+https://baduks.store/
 
 <img src='./demo.gif' width=800 alt='demo'> </img>
 
