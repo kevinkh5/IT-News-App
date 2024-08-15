@@ -2,11 +2,13 @@ from flask import Flask, request, make_response, jsonify, send_from_directory, s
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 import os
 from pathlib import Path
 import secrets
+korean_offset = timedelta(hours=9)
+korean_tz = timezone(korean_offset)
 dotenv_path = Path(__file__).resolve().parent / '.env'
 load_dotenv(dotenv_path)
 app = Flask(__name__)
@@ -50,6 +52,7 @@ class session_log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     session_ip = db.Column(db.String(30), nullable=False, index=True)
     page = db.Column(db.String(50), nullable=True)
+    kor_time = db.Column(db.String(50), nullable=True)
     created_at = db.Column(db.DateTime, nullable=False)
     
     def __repr__(self):
@@ -89,7 +92,10 @@ def newscards():
         return make_response(jsonify(response), 400)
     
     # 세션 로깅
-    new_session = session_log(session_ip=session['client_id'], page='index_page', created_at=datetime.now())
+    now_utc = datetime.now(timezone.utc)
+    now_korean = now_utc.astimezone(korean_tz)
+    date_str = now_korean.strftime('%Y-%m-%d %H:%M:%S')
+    new_session = session_log(session_ip=session['client_id'], page='index_page',kor_time=date_str, created_at=now_korean)
     db.session.add(new_session)
     db.session.commit()
 
@@ -130,7 +136,10 @@ def content():
                'summary':target2.summary,'destination_link':target1.destination_link};
 
     # 세션 로깅
-    new_session = session_log(session_ip=session['client_id'], page=f'{category} - {news_info_id}', created_at=datetime.now())
+    now_utc = datetime.now(timezone.utc)
+    now_korean = now_utc.astimezone(korean_tz)
+    date_str = now_korean.strftime('%Y-%m-%d %H:%M:%S')
+    new_session = session_log(session_ip=session['client_id'], page=f'{category} - {news_info_id}',kor_time=date_str, created_at=now_korean)
     db.session.add(new_session)
     db.session.commit()
 
