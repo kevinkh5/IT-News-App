@@ -1,14 +1,17 @@
-from flask import Flask, request, make_response, jsonify, send_from_directory
+from flask import Flask, request, make_response, jsonify, send_from_directory, session
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from collections import defaultdict
+from datetime import datetime
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+import secrets
 dotenv_path = Path(__file__).resolve().parent / '.env'
 load_dotenv(dotenv_path)
 app = Flask(__name__)
 CORS(app) # (Cross-Origin Resource Sharing) 허용시키기
+app.config['SECRET_KEY'] = secrets.token_hex(16) # 비밀 키를 생성
 
 # PostgreSQL 데이터베이스 URI 설정
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{os.getenv('user')}:{os.getenv('password')}@{os.getenv('host')}:{os.getenv('port')}/{os.getenv('dbname')}'
@@ -42,6 +45,24 @@ class news_content(db.Model):
     def __repr__(self):
         return f'<news_content {self.news_info_id}>'
 
+# session_log 모델 정의
+class session_log(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    session_ip = db.Column(db.String(30), nullable=False, index=True)
+    page = db.Column(db.String(50), nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False)
+    
+    def __repr__(self):
+        return f'<session_log {self.id}>'
+
+# 세션 로깅
+@app.before_request
+def app_before_request():
+    if 'client_id' not in session:
+        session['client_id'] = request.environ.get(
+            'HTTP_X_REAL_IP', request.remote_addr)
+
+
 # 데이터베이스내 테이블 준비
 with app.app_context():
     db.create_all()
@@ -66,6 +87,12 @@ def newscards():
             'message': 'Bad Request'
         }
         return make_response(jsonify(response), 400)
+    
+    # 세션 로깅
+    new_session = session_log(session_ip=session['client_id'], page='index_page', created_at=datetime.now())
+    db.session.add(new_session)
+    db.session.commit()
+
     # news_data를 json형식으로 변환 후 HTTP 200 응답생성
     return make_response(jsonify(newscards_list), 200)
 
@@ -75,8 +102,6 @@ def content():
     # 쿼리 파라미터 가져오기
     category = request.args.get('category', default='', type=str)
     news_info_id = request.args.get('id', default='', type=str)
-    print("category : ",category)
-    print("news_info_id : ",news_info_id)
     try:
         target1 = news_info.query.filter_by(category=category, id=news_info_id).one()
     except Exception as e:
@@ -103,6 +128,11 @@ def content():
                'author':target1.author, 'date':target1.date,
                'img_link':target1.img_link, 'description':target2.description,
                'summary':target2.summary,'destination_link':target1.destination_link};
+
+    # 세션 로깅
+    new_session = session_log(session_ip=session['client_id'], page=f'{category} - {news_info_id}', created_at=datetime.now())
+    db.session.add(new_session)
+    db.session.commit()
 
     return make_response(jsonify(content), 200)
 

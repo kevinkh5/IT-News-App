@@ -26,3 +26,10 @@ CREATE TABLE IF NOT EXISTS news_content (
         ON DELETE CASCADE,
     INDEX (news_info_id)
 );
+
+CREATE TABLE IF NOT EXISTS session_log (
+    id SERIAL PRIMARY KEY,
+    session_ip VARCHAR(30) NOT NULL,
+    page VARCHAR(50),
+    created_at TIMESTAMP NOT NULL
+);
