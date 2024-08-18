@@ -109,7 +109,8 @@ def content():
     category = request.args.get('category', default='', type=str)
     news_info_id = request.args.get('id', default='', type=str)
     try:
-        target1 = news_info.query.filter_by(category=category, id=news_info_id).one()
+        # target1 = news_info.query.filter_by(category=category, id=news_info_id).one()
+        target1 = news_info.query.filter_by(id=news_info_id).one()
     except Exception as e:
         print('target1')
         print(e)
